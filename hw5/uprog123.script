@@ -1,0 +1,77 @@
+Script started on Thu 13 May 2021 04:49:47 PM EDT
+tuser@tutor-vserver:~$ exitmtip -f uprog123.lnxscp ivana86@users.cs.umb.edu:cs444/hw5/uprog123.* .
+ivana86@users.cs.umb.edu's password: 
+uprog123.c                                      0%    0     0.0KB/s   --:-- ETAuprog123.c                                    100%  734     0.7KB/s   00:00    
+uprog123.lnx                                    0%    0     0.0KB/s   --:-- ETAuprog123.lnx                                  100%   73KB  73.0KB/s   00:00    
+uprog123.o                                      0%    0     0.0KB/s   --:-- ETAuprog123.o                                    100% 7168     7.0KB/s   00:00    
+uprog123.syms                                   0%    0     0.0KB/s   --:-- ETAuprog123.syms                                 100% 3283     3.2KB/s   00:00    
+tuser@tutor-vserver:~$ scp ivana86@users.cs.umb.edu:cs444/hw5/uprog123.* .[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[Kmtip -f uprog123.lnx
+For command help, type ~?
+For help on args, rerun without args
+Code starts at 0x100100
+Using board # 1 
+Please type <CR> to confirm console setting: 
+Setting console dev to COM2Console: colour EGA+ 80x25
+COM1 at 0x03f8 (irq = 4) is a 16550A
+COM2 at 0x02f8 (irq = 3) is a 16550A
+
+                 Welcome to UMB Tutor for the PC
+   UMB Tutor is a 32-bit protected-mode PC debugger/downloader,
+       based on Linux, UMB Tutor for m68k, and remote gdb.
+UMB Tutor is free software and you are welcome to distribute copies
+of it under certain conditions.  There is no warranty for this program.
+The copyright and warranty provisions follow the Gnu general public
+license, available for view in gdb and elsewhere.  Full sources available.
+--bugs, suggestions, questions to eoneil@cs.umb.edu
+
+Exception 3 at EIP=00057a9b: Breakpoint
+Tutor> ~downloading uprog123.lnx
+
+..................Done.
+
+Download done, setting EIP to 100100.
+Tutor> go 100100
+Setting IDT interrupt gate descriptor for irq 0 (int n = 0x20)
+Commanding PIC to interrupt CPU for irq 0 (TIMER0_IRQ)
+Commanding timer to generate pulse train using this count
+Enabling interrupts in CPU
+*aaaaaaaaaa*************AAAAAAAAAAbbbbbbbbbb*************BBBBBBBBBBccccccccccSHUTTING DOWN
+
+EXIT CODE OF PROCESS 1: 2
+output character count: 1
+Ticks in process 1: 13
+
+EXIT CODE OF PROCESS 2: 4
+output character count: 2
+Ticks in process 2: 13
+
+EXIT CODE OF PROCESS 3: 6
+output character count: 3
+Ticks in process 3: 0
+Scheduler for 0 called: 0
+Scheduler for 1 called: 1
+Scheduler for 2 called: 3
+Scheduler for 3 called: 0
+SHUTTING THE SYSTEM DOWN!
+Debug log from run:
+Marking kernel events as follows:
+  ^a   COM2 input interrupt, a received
+  ~d   COM2 output interrupt, ordinary char output
+  ~e   COM2 output interrupt, echo output
+  ~s   COM2 output interrupt, shutdown TX ints
+  |(1z-2) process switch from 1, now a zombie, to 2
+  |(1b-2) process switch from 1, now blocked, to 2
+  |(2-1) process switch (by preemption) from 2 to 1
+|(0-1)~d~d~d~d~d~d~s~d~s~d~s~d~s~d~s*1*1*1*1*1*1*1*1*1*1*1*1*1~d~d~d~d~d~d~s~d~s~d~s~d~s~d~s|(1z-2)~d~d~d~d~d~d~s~d~s~d~s~d~s~d~s*2*2*2*2*2*2*2*2*2*2*2*2*2~d~d~d~d~d~d~s~d~s~d~s~d~s~d~s|(2z-3)~d~d~d~d~d~d~s~d~s~d~s~d~s~d~s|(3z-0)
+LEAVE KERNEL!
+
+Exception 3 at EIP=0010010b: Breakpoint
+Tutor> 
+Tutor> 
+Quit handler: 
+killing process 3063 Leaving board #1
+tuser@tutor-vserver:~$ mtip -f uprog123.lnxscp ivana86@users.cs.umb.edu:cs444/hw5/uprog123.* .[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cexit[Kmtip -f uprog123.lnxscp ivana86@users.cs.umb.edu:cs444/hw5/uprog123.* .[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmtip[Kexitmtipscript homework4_ivana86_script[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmtip[Kscript homework4_ivana86_script[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[C[Cmtip[K[K[K[K[K
+tuser@tutor-vserver:~$ exit
+exit
+
+Script done on Thu 13 May 2021 04:51:04 PM EDT

@@ -1,0 +1,131 @@
+Script started on Tue 09 Feb 2021 10:47:36 PM EST
+]0;tuser@tutor-vserver: ~tuser@tutor-vserver:~$ gdb testio.lnx
+GNU gdb (GDB) 7.0.1-debian
+Copyright (C) 2009 Free Software Foundation, Inc.
+License GPLv3+: GNU GPL version 3 or later <http://gnu.org/licenses/gpl.html>
+This is free software: you are free to change and redistribute it.
+There is NO WARRANTY, to the extent permitted by law.  Type "show copying"
+and "show warranty" for details.
+This GDB was configured as "i486-linux-gnu".
+For bug reporting instructions, please see:
+<http://www.gnu.org/software/gdb/bugs/>...
+Reading symbols from /home/tuser/testio.lnx...done.
+(gdb) tar rem /devttyS0[KO
+/devttySO: No such file or directory.
+(gdb) tar rem /devttySO[K0
+/devttyS0: No such file or directory.
+(gdb) tar rem /devttyS0/ttyS0[C[C[C[C[C[KO
+/dev/ttySO: No such file or directory.
+(gdb) tar rem /dev/ttySO[K0
+Remote debugging using /dev/ttyS0
+0x00100100 in _start ()
+(gdb) set $eip=0x100100
+(gdb) b main
+Breakpoint 1 at 0x100128: file testio.c, line 28.
+(gdb) c
+Continuing.
+
+Breakpoint 1, main () at testio.c:28
+28	{
+(gdb) l
+23	  output polling to the console device with interrupts (temporarily) off.
+24	  We are using it as a debugging tool while working with a development
+25	  system, especially one using interrupts.  */
+26	
+27	int main(void)
+28	{
+29	  char buf[BUFLEN];
+30	  int got, i, lib_console_dev, ldev;
+31	
+32	  /* Determine the SAPC's "console" device, the serial port for user i/o */
+(gdb) l
+33	  lib_console_dev = sys_get_console_dev();  /* SAPC support lib fn */
+34	  switch(lib_console_dev) {
+35	  case COM1: ldev = TTY0;	/* convert to our dev #'s */
+36	    break;
+37	  case COM2: ldev = TTY1;
+38	    break;
+39	  default: printf("Unknown console device\n");
+40	    return 1;
+41	  }
+42	  kprintf("Running with device TTY%d\n",ldev);
+(gdb) l
+43	  /* Now have a usable device to talk to with i/o package-- */
+44	
+45	  ioinit();  /* Initialize devices */
+46	  kprintf("\nTrying simple write(4 chars)...\n");
+47	  got = write(ldev,"hi!\n",4);
+48	  kprintf("write of 4 returned %d\n",got);
+49	  delay();  /* time for output to finish, once write-behind is working */
+50	
+51	  kprintf("Trying longer write (9 chars)\n");
+52	  got = write(ldev, "abcdefghi", 9);
+(gdb) b46 46
+Breakpoint 2 at 0x1001af: file testio.c, line 46.
+(gdb) c
+Continuing.
+
+Breakpoint 2, main () at testio.c:46
+46	  kprintf("\nTrying simple write(4 chars)...\n");
+(gdb) n
+47	  got = write(ldev,"hi!\n",4);
+(gdb) n
+48	  kprintf("write of 4 returned %d\n",got);
+(gdb) n
+49	  delay();  /* time for output to finish, once write-behind is working */
+(gdb) n
+51	  kprintf("Trying longer write (9 chars)\n");
+(gdb) n
+52	  got = write(ldev, "abcdefghi", 9);
+(gdb) l
+47	  got = write(ldev,"hi!\n",4);
+48	  kprintf("write of 4 returned %d\n",got);
+49	  delay();  /* time for output to finish, once write-behind is working */
+50	
+51	  kprintf("Trying longer write (9 chars)\n");
+52	  got = write(ldev, "abcdefghi", 9);
+53	  kprintf("write of 9 returned %d\n",got);
+54	  delay();  /* time for output to finish, once write-behind is working */
+55	
+56	  for (i = 0; i < BUFLEN; i++)
+(gdb) l
+57	      buf[i] = 'A'+ i/2;
+58	  kprintf("\nTrying write of %d-char string...\n", BUFLEN);
+59	  got = write(ldev, buf, BUFLEN);
+60	  kprintf("\nwrite returned %d\n", got);
+61	  delay();
+62	
+63	  kprintf("\nType 10 chars input to test typeahead while looping for delay...\n");
+64	  delay();
+65	  got = read(ldev, buf, 10);	/* should wait for all 10 chars, once fixed */
+66	  kprintf("\nGot %d chars into buf. Trying write of buf...\n", got);
+(gdb) b 63
+Breakpoint 3 at 0x1002ad: file testio.c, line 63.
+(gdb) c
+Continuing.
+
+Breakpoint 3, main () at testio.c:63
+63	  kprintf("\nType 10 chars input to test typeahead while looping for delay...\n");
+(gdb) c
+Continuing.
+
+Program received signal SIGTRAP, Trace/breakpoint trap.
+_startupc () at startup.c:7
+7	startup.c: No such file or directory.
+	in startup.c
+(gdb) x/16bx 0x300000
+0x300000:	0x3c	0x68	0x3c	0x69	0x3c	0x21	0x3c	0x0a
+0x300008:	0x3c	0x61	0x3c	0x62	0x3c	0x63	0x3c	0x64
+(gdb) x/16bx 0x300010
+0x300010:	0x3c	0x65	0x3c	0x66	0x3c	0x67	0x3c	0x68
+0x300018:	0x3c	0x69	0x3c	0x41	0x3c	0x41	0x3c	0x42
+(gdb) quit
+A debugging session is active.
+
+	Inferior 1 [Remote target] will be killed.
+
+Quit anyway? (y or n) y
+]0;tuser@tutor-vserver: ~tuser@tutor-vserver:~$ exit
+exit
+
+Script done on Tue 09 Feb 2021 10:54:11 PM EST
